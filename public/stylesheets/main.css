@@ -1,0 +1,10 @@
+ody {
+     font-family: Arial, sans-serif;
+     background-color: #f4f4f4;
+     background-image: url("@routes.Assets.versioned("images/cabs.jpg")");
+     background-size: cover;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     margin: 0;
+     padding: 0;
+ }

@@ -1,0 +1,71 @@
+@()
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+     font-family: Arial, sans-serif;
+     background-color: #f4f4f4;
+     margin: 0;
+     padding: 0;
+ }
+
+ .container {
+     max-width: 800px;
+     margin: 50px auto;
+     background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+     padding: 20px;
+     border-radius: 5px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     text-align: center;
+ }
+
+ h1 {
+     color: #007bff;
+     margin-bottom: 20px;
+ }
+
+ .button-container {
+     display: flex;
+     justify-content: center;
+     margin-top: 20px;
+ }
+
+ .button {
+     background-color: #007bff;
+     color: #fff;
+     border: none;
+     padding: 10px 20px;
+     border-radius: 5px;
+     cursor: pointer;
+     margin: 0 10px;
+ }
+
+ .button:hover {
+     background-color: #0056b3;
+ }
+
+  </style>
+
+  <title>Cab Book</title>
+
+</head>
+<body>
+<div class="container">
+  <h1>Welcome to Cab Book</h1>
+  <h3>For Users</h3>
+  <div class="button-container">
+    <a href="@routes.UserController.createUser" class="button">Create Account</a>
+    <a href="@routes.LoginController.login" class="button">Login</a>
+  </div>
+
+  <h3>For Drivers</h3>
+  <div class="button-container">
+    <a href="@routes.DriverController.createDriverForm" class="button">Create Account</a>
+    <a href="@routes.DriverController.showLoginForm" class="button">Login</a>
+  </div>
+</div>
+</body>
+</html>
