@@ -1,0 +1,99 @@
+@(combinedForm: Form[CombinedData])(implicit messages: MessagesProvider)
+
+@import helper._
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+             background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <title>Create User</title>
+</head>
+<body>
+<div class="container">
+    <h2>Create Driver and Cab</h2>
+    @helper.form(action = routes.DriverController.createDriverAndCab) {
+    <div class="form-group">
+        <input type="hidden" name="driver_id" value="1">
+    </div>
+
+    <h3>Driver Details</h3>
+
+    <div class="form-group">
+        @helper.inputText(combinedForm("driver_name"))
+    </div>
+    <div class="form-group">
+        @helper.inputText(combinedForm("driver_email"))
+    </div>
+    <div class="form-group">
+        @helper.inputPassword(combinedForm("driver_password"))
+    </div>
+
+    <div class="form-group">
+        @helper.inputText(combinedForm("public_key"))
+    </div>
+
+    <h3>Cab Details</h3>
+    <div class="form-group">
+        @helper.inputText(combinedForm("cab_name"))
+    </div>
+    <div class="form-group">
+        @helper.inputText(combinedForm("fare"))
+    </div>
+    <div class="form-group">
+        @helper.inputText(combinedForm("seater"))
+    </div>
+
+    <button type="submit">Create Driver and Cab</button>
+    }
+</div>
+</body>
+</html>

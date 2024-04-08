@@ -1,0 +1,88 @@
+@(driver:Driver,ratings:Int,bookings:Seq[Bookings])
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Driver Profile</title> <!-- Combined both titles -->
+    <style>
+        /* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #007bff;
+    margin-top: 20px;
+}
+
+.confirmation-details {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+}
+
+.detail-label {
+    font-weight: bold;
+}
+
+.detail-value {
+    margin-left: 10px;
+}
+
+/* Styles for the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+    </style>
+</head>
+<body>
+<h1>Driver Profile</h1>
+
+<div class="confirmation-details">
+    <p><span class="detail-label">Name:</span><span class="detail-value">@driver.driverName</span></p>
+    <p><span class="detail-label">Cab :</span><span class="detail-value">@driver.cabName</span></p>
+    <p><span class="detail-label">MetaMask Public Key :</span><span class="detail-value">@driver.publicKey</span></p>
+    <p><span class="detail-label">Average Rating:</span><span class="detail-value">@ratings</span></p>
+</div>
+
+<h2>Previous Bookings</h2>
+
+<table>
+    <tr>
+        <th>Booking ID</th>
+        <th>User ID</th>
+        <th>Cab</th>
+        <th>Booking Date</th>
+        <th>From City ID</th>
+        <th>To City ID</th>
+    </tr>
+    @for(booking <- bookings) {
+    <tr>
+        <td>@booking.booking_id</td>
+        <td>@booking.user_id</td>
+        <td>@booking.cab</td>
+        <td>@booking.booking_date</td>
+        <td>@booking.from_city_id</td>
+        <td>@booking.to_city_id</td>
+    </tr>
+    }
+</table>
+
+</form>
+</body>
+</html>
