@@ -12,10 +12,10 @@ class BookingDAO @Inject()(tables: Tables){
   import slick.jdbc.PostgresProfile.api._
   import models.PrivateExecutionContext._
 
-  def insertBooking(user: String, cab: String, from_city_id: Int, to_city_id: Int,cab_id:Int): Unit = {
+  def insertBooking(user: String, cab: String, from_city_id: Int, to_city_id: Int,cab_id:Int,fare:Int): Unit = {
     val time = java.sql.Timestamp.from(java.time.Instant.now())
 
-    val newValue = Bookings(1,user,cab,time,from_city_id,to_city_id,cab_id)
+    val newValue = Bookings(1,user,cab,time,from_city_id,to_city_id,cab_id,fare)
 
     val insertFuture = db.run(tables.bookingTable+=newValue)
 
@@ -36,7 +36,6 @@ class BookingDAO @Inject()(tables: Tables){
   }
 
   def demoUpdate(selectedCabName: String): Unit = {
-    // Construct the SQL query string with string interpolation
     val futureResult = db.run(tables.cabsTable
       .filter(_.cabName === selectedCabName)
       .map(_.status)

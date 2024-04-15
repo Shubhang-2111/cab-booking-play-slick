@@ -9,7 +9,8 @@ case class Bookings(
                      booking_date: Timestamp,
                      from_city_id: Int,
                      to_city_id: Int,
-                     cab_id:Int
+                     cab_id:Int,
+                     fare:Int
                    )
 case class Users(id: Long, name: String, lstName: String,email :String, password: String)
 

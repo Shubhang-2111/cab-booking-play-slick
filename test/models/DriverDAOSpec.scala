@@ -37,5 +37,17 @@ class DriverDAOSpec extends PlaySpec with GuiceOneAppPerTest with ScalaFutures {
         }
       }
 
+    "get driver rating " in {
+      val result = driverDAO.totalIncome(Seq())
+
+      result mustBe 0
+    }
+
+    "get driver details" in {
+      val result = driverDAO.getDriverDetails(2)
+
+      result.driverName mustBe "TestDriver"
+    }
+
   }
 }

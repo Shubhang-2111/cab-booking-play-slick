@@ -1,8 +1,6 @@
 package controllers
 
 import com.google.inject.Singleton
-import controllers.routes
-import models.PrivateExecutionContext.ec
 import models.{PrivateExecutionContext, UserDAO, Users}
 import play.api.data.Form
 import play.api.data.Forms._
@@ -26,7 +24,7 @@ class UserController @Inject()(userDAO: UserDAO)(val controllerComponents: Contr
   )
 
   def createUserForm: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.createUser(userForm)(messagesApi.preferred(request))).withSession()
+    Ok(views.html.createUser(userForm)(messagesApi.preferred(request)))
   }
 
   def createUser: Action[AnyContent] = Action.async { implicit request =>

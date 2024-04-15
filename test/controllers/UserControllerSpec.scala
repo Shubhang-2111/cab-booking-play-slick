@@ -12,8 +12,8 @@ class UserControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
 
     "UserController" should {
 
-      val controller = inject[UserController]
       "render create user form" in {
+        val controller = inject[UserController]
         val request = FakeRequest(GET, "/create-user")
         val result: Future[Result] = controller.createUserForm.apply(request)
 
@@ -23,6 +23,7 @@ class UserControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       }
 
       "create user successfully" in {
+        val controller = inject[UserController]
         val request = FakeRequest(POST, "/create-user").withFormUrlEncodedBody(
           "user_id" -> "1",
           "name" -> "John",

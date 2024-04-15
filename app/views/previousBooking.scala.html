@@ -1,36 +1,13 @@
 @(bookings: Seq[Bookings])
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            padding: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/previousBooking.css")">
     <title>Previous Bookings</title>
 </head>
 <body>
-
-<h2>Previous Bookings</h2>
+<div>@navBar()</div>
+<h1>Previous Bookings</h1>
 
 <table>
     <tr>
@@ -40,6 +17,7 @@
         <th>Booking Date</th>
         <th>From City ID</th>
         <th>To City ID</th>
+        <th>Fare</th>
     </tr>
     @for(booking <- bookings) {
     <tr>
@@ -49,6 +27,7 @@
         <td>@booking.booking_date</td>
         <td>@booking.from_city_id</td>
         <td>@booking.to_city_id</td>
+        <td>@booking.fare</td>
     </tr>
     }
 </table>

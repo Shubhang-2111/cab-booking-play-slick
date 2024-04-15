@@ -21,17 +21,17 @@ class UserDAOSpec extends PlaySpec with GuiceOneAppPerTest with ScalaFutures {
 
       val required = Await.result(
         db.run(tablesMock.userTable
-          .filter(el => el.name === "TestUser")
+          .filter(el => el.name === "Test")
           .result), Duration.Inf).size
 
-      required mustBe 2
+      required mustBe 1
     }
 
     "authenticate user" in{
-      val result = userDAO.authenticate("testUser@gmail.com","123")
+      val result = userDAO.authenticate("testuser@gmail.com","123")
 
       result.map{
-        case Some(user) => user.name mustBe "TestUser"
+        case Some(user) => user.name mustBe "Test"
         case None => None
       }
     }

@@ -1,66 +1,24 @@
-@(driver:Driver,ratings:Int,bookings:Seq[Bookings])
+@(driver:Driver,ratings:Int,bookings:Seq[Bookings],totalIncome:Double)
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Driver Profile</title> <!-- Combined both titles -->
-    <style>
-        /* styles.css */
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
-
-h1 {
-    color: #007bff;
-    margin-top: 20px;
-}
-
-.confirmation-details {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-}
-
-.detail-label {
-    font-weight: bold;
-}
-
-.detail-value {
-    margin-left: 10px;
-}
-
-/* Styles for the table */
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-    </style>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/driverProfile.css")">
 </head>
 <body>
+<div>@navBar()</div>
 <h1>Driver Profile</h1>
 
 <div class="confirmation-details">
     <p><span class="detail-label">Name:</span><span class="detail-value">@driver.driverName</span></p>
     <p><span class="detail-label">Cab :</span><span class="detail-value">@driver.cabName</span></p>
     <p><span class="detail-label">MetaMask Public Key :</span><span class="detail-value">@driver.publicKey</span></p>
-    <p><span class="detail-label">Average Rating:</span><span class="detail-value">@ratings</span></p>
+    <p><span class="detail-label">Average Rating out of 5:</span><span class="detail-value">@ratings</span></p>
+    <p><span class="detail-label">Total Earnings: Rs.</span><span class="detail-value">@totalIncome /-</span></p>
 </div>
 
-<h2>Previous Bookings</h2>
+<h1>Previous Bookings</h1>
 
 <table>
     <tr>
@@ -70,6 +28,7 @@ th, td {
         <th>Booking Date</th>
         <th>From City ID</th>
         <th>To City ID</th>
+        <th>Fare</th>
     </tr>
     @for(booking <- bookings) {
     <tr>
@@ -79,6 +38,7 @@ th, td {
         <td>@booking.booking_date</td>
         <td>@booking.from_city_id</td>
         <td>@booking.to_city_id</td>
+        <td>@booking.fare</td>
     </tr>
     }
 </table>

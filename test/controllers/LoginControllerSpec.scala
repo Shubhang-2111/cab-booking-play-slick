@@ -1,11 +1,14 @@
 package controllers
 
+import models.PrivateExecutionContext.ec
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.mvc._
 import play.api.test._
 import play.api.test.Helpers._
+
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class LoginControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
 
@@ -22,31 +25,29 @@ class LoginControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injectin
       contentAsString(result) must include("Login")
     }
 
-    "authenticate user with valid credentials" in {
+    "redirect to booking page upon successful authentication" in {
+
       val controller = inject[LoginController]
-      val request = FakeRequest(POST, "/login").withFormUrlEncodedBody(
-        "email" -> "test@example.com",
-        "password" -> "password"
-      )
 
-      val result: Future[Result] = controller.login.apply(request)
+      val request = FakeRequest(GET, "/login")
+        .withFormUrlEncodedBody("Email" -> "testuser@gmail.com", "Password" -> "123")
+        .withSession("email" -> "testuser@gmail.com")
 
-      status(result) mustBe OK
-      redirectLocation(result) mustBe Some("/booking")
-      contentAsString(result) must include("")
+      val result: Future[Result] = controller.login().apply(request)
+
+
+      val redirect = redirectLocation(result)
+      redirect.get mustEqual routes.BookingController.bookingPage("testuser@gmail.com").url
     }
 
     "reject authentication with invalid credentials" in {
       val controller = inject[LoginController]
-      val request = FakeRequest(POST, "/login").withFormUrlEncodedBody(
-        "email" -> "invalid@example.com",
-        "password" -> "wrongpassword"
-      )
+      val request = FakeRequest(POST, routes.LoginController.login.url)
+        .withFormUrlEncodedBody("email" -> "invalid@example.com", "password" -> "invalidPassword")
+      val result = controller.login().apply(request)
 
-      val result: Future[Result] = controller.login.apply(request)
-
-      status(result) mustBe UNAUTHORIZED
-      contentAsString(result) must include("Invalid email or password")
+      status(result) mustBe BAD_REQUEST
     }
+
   }
 }

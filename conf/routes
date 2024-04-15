@@ -29,7 +29,7 @@ POST /bookingConfirmation       controllers.BookingController.confirmBooking
 
 POST /submitRating              controllers.BookingController.submitRating
 
-GET     /ratings         controllers.BookingController.ratings(sourceCityId: Int, destinationCityId: Int, selectedCabId: String)
+GET     /ratings         controllers.BookingController.ratings(sourceCityId: Int, destinationCityId: Int, selectedCabId: String,user:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

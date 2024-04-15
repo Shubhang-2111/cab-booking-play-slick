@@ -3,7 +3,6 @@ package controllers
 import com.google.inject.Singleton
 import models.{BookingDAO, Cabs, CabsDAO, City, DriverDAO}
 import models.PrivateExecutionContext.ec
-
 import javax.inject.Inject
 import play.api.mvc._
 import scala.concurrent.Future
@@ -12,12 +11,13 @@ import scala.concurrent.Future
 class BookingController @Inject()(cabsDAO: CabsDAO,bookingDAO: BookingDAO,driverDAO: DriverDAO)(val controllerComponents: ControllerComponents) extends BaseController {
 
   def bookingPage(userEmail:String): Action[AnyContent] = Action.async(implicit request => {
+    val sessionBookingPage = request.session.get("email").getOrElse("")
     val allCabsFuture: Future[Seq[Cabs]] = cabsDAO.demoReadAllCabs()
     val allCitiesFuture: Future[Seq[City]] = cabsDAO.demoReadCities()
     for {
       allCabs <- allCabsFuture
       allCities <- allCitiesFuture
-    } yield Ok(views.html.booking(allCabs, userEmail, allCities))
+    } yield Ok(views.html.booking(allCabs, sessionBookingPage, allCities))
   })
 
 
@@ -37,13 +37,12 @@ class BookingController @Inject()(cabsDAO: CabsDAO,bookingDAO: BookingDAO,driver
     val distanceFuture = cabsDAO.findDistance(sourceCityId.toInt,destinationCityId.toInt)
     val (sourceCityName,destinationCityName) = (cabsDAO.findCityName(sourceCityId.toInt),
       cabsDAO.findCityName(destinationCityId.toInt))
-
     distanceFuture.map{
       case Some(distance) =>
         val fare = cabsDAO.calculateFare(distance.toInt,selectedCabName)
         Ok(views.html.bookingConfirmation(sourceCityId.toInt,destinationCityId.toInt,sourceCityName,destinationCityName, distance.toInt, selectedCabName, user, fare,ratings,selectedCab.toInt))
       case None =>
-        NotFound("Destination and Source cannot be Same")
+        Ok("<script>alert('Destination and Source cannot be Same');</script>").as("text/html")
     }
   }
 
@@ -53,16 +52,15 @@ class BookingController @Inject()(cabsDAO: CabsDAO,bookingDAO: BookingDAO,driver
     val distance = request.body.asFormUrlEncoded.get("distance").head.toInt
     val selectedCab = request.body.asFormUrlEncoded.get("selectedCab").head
     val user = request.body.asFormUrlEncoded.get("user").head
-    val fare = request.body.asFormUrlEncoded.get("fare").head.toDouble
+    val fare = request.body.asFormUrlEncoded.get("fare").head.toFloat.toInt
     val selectedCabId = request.body.asFormUrlEncoded.get("cabId").head.toInt
 
-    bookingDAO.insertBooking(user,selectedCab,sourceCityId.toInt,destinationCityId.toInt,selectedCabId)
+    bookingDAO.insertBooking(user,selectedCab,sourceCityId.toInt,destinationCityId.toInt,selectedCabId,fare)
     bookingDAO.demoUpdate(selectedCab)
 
     val publicKey = driverDAO.getPublicKey(selectedCabId)
 
-//    Ok(views.html.ratings(sourceCityId.toInt, destinationCityId.toInt, selectedCab))
-    Ok(views.html.payment(publicKey,fare*0.0000000001,sourceCityId.toInt,destinationCityId.toInt,selectedCab))
+    Ok(views.html.payment(publicKey,fare*0.0000000001,sourceCityId.toInt,destinationCityId.toInt,selectedCab,user))
   }
 
   def previousBookings(user:String): Action[AnyContent] = Action.async { implicit request=>
@@ -72,8 +70,8 @@ class BookingController @Inject()(cabsDAO: CabsDAO,bookingDAO: BookingDAO,driver
     } yield Ok(views.html.previousBooking(booking))
   }
 
-  def ratings(sourceCityId: Int, destinationCityId: Int, selectedCabId: String): Action[AnyContent] = Action{ implicit request =>
-    Ok(views.html.ratings(sourceCityId, destinationCityId, selectedCabId))
+  def ratings(sourceCityId: Int, destinationCityId: Int, selectedCabId: String,user:String): Action[AnyContent] = Action{ implicit request =>
+    Ok(views.html.ratings(sourceCityId, destinationCityId, selectedCabId,user))
   }
   def submitRating: Action[AnyContent] = Action { implicit request =>
 
@@ -81,9 +79,10 @@ class BookingController @Inject()(cabsDAO: CabsDAO,bookingDAO: BookingDAO,driver
     val destinationCityId = request.body.asFormUrlEncoded.get("destinationCityId").head
     val rating = request.body.asFormUrlEncoded.get("rating").head
     val cab = request.body.asFormUrlEncoded.get("selectedCab").head
+    val user = request.body.asFormUrlEncoded.get("user").head
 
     bookingDAO.insertRating(cab,sourceCityId.toInt,destinationCityId.toInt,rating.toInt)
-    Ok("Thank For Journey!!!")
+    Ok("<script>alert('Thanks For Travelling With Us'); window.location.href = \"/\"; </script>").as("text/html")
   }
 
 }

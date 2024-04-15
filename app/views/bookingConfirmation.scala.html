@@ -1,39 +1,12 @@
 @(sourceCityId: Int, destinationCityId: Int,sourceCity: String, destinationCity: String, distance: Int, selectedCab: String, user: String, fare: Double,ratings:Int,cabId:Int)
-<!DOCTYPE html>
+
 <html>
 <head>
     <title>Booking Confirmation</title>
-    <style>
-        /* CSS Styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            color: #007bff;
-            margin-top: 20px;
-        }
-        .confirmation-details {
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin-top: 20px;
-             background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-        }
-        .detail-label {
-            font-weight: bold;
-        }
-        .detail-value {
-            margin-left: 10px;
-        }
-        /* Add more CSS styles as needed */
-    </style>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bookingConfirmation.css")">
 </head>
 <body>
+<div>@navBar()</div>
 <h1>Booking Confirmation</h1>
 
 <div class="confirmation-details">
@@ -43,13 +16,11 @@
     <p><span class="detail-label">Selected Cab:</span><span class="detail-value">@selectedCab</span></p>
     <p><span class="detail-label">User:</span><span class="detail-value">@user</span></p>
     <p><span class="detail-label">Expected Fare:</span><span class="detail-value">Rs.@fare /-</span></p>
-    <p><span class="detail-label">Average Rating of the cab for this route:</span><span class="detail-value"> @ratings Out of 5</span></p>
+    <p><span class="detail-label">Average Rating of the cab out of 5:</span><span class="detail-value"> @ratings</span> </p>
 
 </div>
 
-<!-- Booking Form -->
 <form action="@routes.BookingController.confirmBooking" method="POST">
-    <!-- Hidden fields for passing data to the booking action -->
     <input type="hidden" name="sourceCityId" value="@sourceCityId">
     <input type="hidden" name="destinationCityId" value="@destinationCityId">
     <input type="hidden" name="sourceCity" value="@sourceCity">
@@ -60,7 +31,6 @@
     <input type="hidden" name="fare" value="@fare">
     <input type="hidden" name="cabId" value="@cabId">
 
-    <!-- Button to submit the form -->
     <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; cursor: pointer; margin-top: 20px;">Book Now</button>
 </form>
 </body>

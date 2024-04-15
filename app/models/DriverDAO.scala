@@ -2,7 +2,6 @@ package models
 
 import com.google.inject.Inject
 import models.Connection.db
-
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
@@ -43,10 +42,10 @@ class DriverDAO @Inject()(tables: Tables){
     ).getOrElse(Driver(1,"","","","",""))
   }
 
-  def getCabId(driverId:Int):Int={
+  def getCabId(cabName:String):Int={
     val cabId = Await.result(
       db.run(tables.cabsTable
-        .filter(_.driverId === driverId)
+        .filter(_.cabName === cabName)
         .map(_.cabId)
         .result
         .headOption), Duration.Inf
@@ -55,9 +54,24 @@ class DriverDAO @Inject()(tables: Tables){
     cabId
   }
 
+  def getCabName(driverId:Int):String = {
+    val result = Await.result(
+      db.run(
+        tables.driverTable
+          .filter(_.driverId === driverId)
+          .map(_.cabName)
+          .result.headOption
+      ),Duration.Inf
+    )
+
+    result.getOrElse("")
+  }
+
   def getAllBookingsByDriver(driverId:Int):Seq[Bookings]={
 
-    val cabId = getCabId(driverId)
+    val cabName = getCabName(driverId)
+
+    val cabId = getCabId(cabName)
 
     val result = Await.result(
       db.run(
@@ -69,9 +83,17 @@ class DriverDAO @Inject()(tables: Tables){
     result
   }
 
+
+  def totalIncome(bookings:Seq[Bookings]):Double = {
+    val result = bookings.map(_.fare).sum
+    result
+  }
+
   def getDriverRating(driverId:Int):Int={
 
-    val cabId = getCabId(driverId)
+    val cabName = getCabName(driverId)
+
+    val cabId = getCabId(cabName)
 
     val ratings= Await.result(
       db.run(tables.ratingsTable
@@ -102,6 +124,4 @@ class DriverDAO @Inject()(tables: Tables){
 
     publicKey
   }
-
-
 }

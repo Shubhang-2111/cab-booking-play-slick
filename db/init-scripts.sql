@@ -40,7 +40,7 @@ CREATE TABLE cabs."Ratings"(
 );
 
 -- Create the 'Bookings' table
-CREATE TABLE IF NOT EXISTS cabs."Bookings"("booking_id" SERIAL NOT NULL PRIMARY KEY,"user_id" VARCHAR NOT NULL,"cab" VARCHAR NOT NULL,"booking_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"from_city_id" INT NOT NULL,"to_city_id" INT NOT NULL,"cab_id" INT NOT NULL);
+CREATE TABLE IF NOT EXISTS cabs."Bookings"("booking_id" SERIAL NOT NULL PRIMARY KEY,"user_id" VARCHAR NOT NULL,"cab" VARCHAR NOT NULL,"booking_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"from_city_id" INT NOT NULL,"to_city_id" INT NOT NULL,"cab_id" INT NOT NULL,"fare" INT NOT NULL);
 
 --INSERT INTO cabs."Cab_details"("cab_name", "fare", "seater","driver_id", "driver_name", "status")
 --VALUES

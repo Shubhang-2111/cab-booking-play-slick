@@ -33,18 +33,6 @@ class UserDAO @Inject()(tables: Tables){
     db.run(tables.userTable.filter(user => user.email === email && user.password === password).result.headOption)
 
 
-//  def insertRating(cabId: Int, sourceId: Int, destinationId: Int, rating: Int): Unit = {
-//
-//    val newValues = Ratings(1L, 1, 1, 1, 1)
-//
-//    val result = db.run(tables.ratingsTable += newValues)
-//    result.onComplete {
-//      case Success(value) => println("Inserted in Ratings")
-//      case Failure(er) => println("Failed due to " + er.getMessage)
-//    }
-//
-//  }
-
 }
 
 

@@ -9,7 +9,6 @@ import scala.concurrent.Future
 
 class
 CabsDAOSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
-  // Assuming you have mock implementations for Tables and db
 
   val tablesMock = new models.Tables
   val cabsDAO = new CabsDAO(tablesMock)
@@ -23,9 +22,9 @@ CabsDAOSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
     }
 
     "find city name by id" in {
-      val cityId = 1 // Assuming cityId exists in your test data
+      val cityId = 1
       val cityName = cabsDAO.findCityName(cityId)
-        cityName mustBe  "New York" // Assert the expected city name
+        cityName mustBe  "New York"
     }
 
     "find distance between cities" in {
@@ -38,8 +37,8 @@ CabsDAOSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
     }
 
     "calculate fare correctly" in {
-      val distance = 50 // Assuming distance in kilometers
-      val selectedCabName = "Toyota Innova" // Assuming selectedCabName exists in your test data
+      val distance = 50
+      val selectedCabName = "Honda City"
       val fare = cabsDAO.calculateFare(distance, selectedCabName)
         fare mustBe 7500
     }

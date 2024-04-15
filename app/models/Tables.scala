@@ -75,7 +75,9 @@ class Tables {
 
     def cab_id = column[Int]("cab_id")
 
-    def * = (booking_id, user_id, cab, booking_date, from_city_id, to_city_id,cab_id) <> (Bookings.tupled, Bookings.unapply)
+    def fare = column[Int]("fare")
+
+    def * = (booking_id, user_id, cab, booking_date, from_city_id, to_city_id,cab_id,fare) <> (Bookings.tupled, Bookings.unapply)
   }
 
 

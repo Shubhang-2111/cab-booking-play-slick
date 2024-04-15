@@ -1,9 +1,7 @@
 package controllers
 
 import com.google.inject.Singleton
-import controllers.routes
 import models.{Cabs, Driver, Login, PrivateExecutionContext,CombinedData}
-
 import javax.inject.Inject
 import play.api.mvc._
 import play.api.data._
@@ -31,8 +29,8 @@ class DriverController @Inject()(driverDAO: models.DriverDAO)(val controllerComp
 
   val loginForm: Form[Login] = Form(
     mapping(
-      "email" -> text,
-      "password" -> nonEmptyText
+      "Email" -> text,
+      "Password" -> nonEmptyText
     )(Login.apply)(Login.unapply)
   )
 
@@ -48,12 +46,11 @@ class DriverController @Inject()(driverDAO: models.DriverDAO)(val controllerComp
       loginData => {
         driverDAO.authenticate(loginData.email, loginData.password).map {
           case Some(driver) => Redirect(controllers.routes.DriverController.driverPage(driver.driverId))
-          case None => Unauthorized("Invalid email or password")
+          case None => BadRequest(views.html.invalidLogin("Driver"))
         }(PrivateExecutionContext.ec)
       }
     )
   }
-
 
   def driverPage (driverId:Int): Action[AnyContent] = Action{ implicit request =>
 
@@ -61,10 +58,11 @@ class DriverController @Inject()(driverDAO: models.DriverDAO)(val controllerComp
     val driverRating = driverDAO.getDriverRating(driverId)
     val bookings = driverDAO.getAllBookingsByDriver(driverId)
 
-    Ok(views.html.driverProfile(driver,driverRating,bookings))
+    val totalIncome = driverDAO.totalIncome(bookings)
+
+    Ok(views.html.driverProfile(driver,driverRating,bookings,totalIncome))
   }
 
-  // ... existing code ...
   def createDriverForm: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.createDriver(combinedForm)(messagesApi.preferred(request)))
   }
@@ -79,7 +77,7 @@ class DriverController @Inject()(driverDAO: models.DriverDAO)(val controllerComp
         val cab = Cabs(100, combinedData.cabName, combinedData.fare, combinedData.seater, driver.driverId, driver.driverName,false)
         driverDAO.insertNewDriver(driver)
         driverDAO.insertNewCab(cab)
-        Future.successful(Ok("Created Driver and Cab!"))
+        Future.successful(Ok(views.html.driverProfile(driver,0,Seq(),0)))
       }
     )
   }

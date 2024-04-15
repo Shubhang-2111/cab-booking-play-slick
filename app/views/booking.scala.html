@@ -2,64 +2,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        body {
-          font-family: Arial, sans-serif;
-          background-color: #f2f2f2;
-          padding: 20px;
-      }
 
-      form {
-           background-color: rgba(255, 255, 255, 0.8);
-          padding: 20px;
-          border-radius: 5px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          max-width: 400px;
-          margin: 0 auto;
-      }
-
-      label {
-          display: block;
-          margin-bottom: 10px;
-      }
-
-      select, button {
-          padding: 10px;
-          margin-bottom: 15px;
-          width: 100%;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          box-sizing: border-box;
-      }
-
-      button {
-          background-color: #007bff;
-          color: #fff;
-          border: none;
-          cursor: pointer;
-      }
-
-      ul {
-          list-style-type: none;
-          padding: 0;
-      }
-
-      li {
-          margin-bottom: 5px;
-      }
-
-      #distanceResult {
-          margin-top: 20px;
-          font-weight: bold;
-      }
-    </style>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/booking.css")">
     <title>Distance Calculator</title>
 </head>
 <body>
-
+<div>@navBar()</div>
 <form id="distanceForm" action="@routes.BookingController.calculateDistance" method="post">
     <input type="hidden" id="user" name="user" value="@user">
-    <p>This is the booking page for @user</p>
+    <h2>Welcome @user </h2>
+    <h4> Fill Out Your Booking Details</h4>
     <label for="source">Source City:</label>
     <select id="source" name="source">
         @for(city <- cities) {

@@ -13,15 +13,6 @@ class BookingDAOSpec extends PlaySpec with GuiceOneAppPerTest with ScalaFutures 
 
   "BookingDAO" must {
 
-//    "Insert Booking" in {
-//
-//      val result = bookingDAO.readAllPreviousBooking("TestUser")
-//
-//      result.map(booking =>
-//        booking must not be empty
-//      )
-//
-//    }
 
     "read all previous booking" in {
 
@@ -32,7 +23,7 @@ class BookingDAOSpec extends PlaySpec with GuiceOneAppPerTest with ScalaFutures 
     " get cab name" in {
       val required = bookingDAO.getCabName(1)
 
-      required mustBe "Toyota Innova"
+      required mustBe "Honda City"
 
     }
 
