@@ -1,0 +1,43 @@
+@import url('main.css');
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #add8e6;
+    margin-top: 20px;
+}
+
+.confirmation-details {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+}
+
+.detail-label {
+    font-weight: bold;
+}
+
+.detail-value {
+    margin-left: 10px;
+}
+
+/* Styles for the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}

@@ -1,0 +1,21 @@
+@(loginType: String)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@loginType</title>
+</head>
+<body>
+<script>
+
+    alert('Invalid email or password');
+    if(@loginType === "User"){
+    window.location.href = '/login'; // Replace '/login' with the actual login page URL if necessary
+    }
+    else{
+    window.location.href = '/driver-login'; // Replace '/login' with the actual login page URL if necessary
+    }
+</script>
+</body>
+</html>

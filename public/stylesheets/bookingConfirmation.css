@@ -1,0 +1,28 @@
+ /* CSS Styles */
+ @import url('main.css');
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+        .confirmation-details {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+             background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+        .detail-label {
+            font-weight: bold;
+        }
+        .detail-value {
+            margin-left: 10px;
+        }
+        /* Add more CSS styles as needed */
